@@ -1,0 +1,12 @@
+{
+	"actorSpecification": 1,
+	"name": "instagram-reel-publisher",
+	"title": "Instagram Reel Publisher",
+	"description": "Instagram Reel Publisher. Crawls Instagram Reels videos and automatically posts them to your account.",
+	"version": "1.0",
+	"meta": {
+		"templateId": "js-crawlee-puppeteer-chrome"
+	},
+	"input": "./input_schema.json",
+	"dockerfile": "./Dockerfile"
+}

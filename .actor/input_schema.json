@@ -1,0 +1,66 @@
+{
+  "title": "Instagram Reels Bot",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "username": {
+      "title": "Instagram username",
+      "type": "array",
+      "description": "Just insert a username or URL of the profile you want to get the reels from.",
+      "editor": "stringList",
+      "prefill": [
+        "Hiropyon1116",
+        "Serious.bara",
+        "Minokapi",
+        "Capisabara",
+        "Bapybara",
+        "Capybara.worlds",
+        "Capybagram",
+        "Capybara_siesta",
+        "Ilove.capybara",
+        "Capybaraenthusiasts"
+      ]
+    },
+    "resultsLimit": {
+      "title": "Maximum reels per profile",
+      "type": "integer",
+      "description": "Maximum number of reels you want to scrape per profile. If you set it to 5, you'll get 5 reels for each profile you've included.",
+      "default": 1
+    },
+    "delay": {
+      "title": "Delay between requests post to Instagram",
+      "type": "integer",
+      "description": "Avoid getting banned by Instagram by setting a delay between requests. The delay is in milliseconds.",
+      "default": 10000
+    },
+
+    "accessToken": {
+      "title": "Facebook long-lived access token",
+      "type": "string",
+      "description": "You can get a Facebook access token from https://developers.facebook.com/tools/explorer/.",
+      "editor": "textfield",
+      "isSecret": true
+    },
+    "instagramPageID": {
+      "title": "Instagram page ID. Used for posting reels to Instagram.",
+      "type": "string",
+      "description": "You can get an Instagram page ID from https://developers.facebook.com/tools/explorer/.",
+      "editor": "textfield"
+    },
+    "hashtags": {
+      "title": "Hashtags",
+      "type": "array",
+      "description": "Hashtags to add to the reels you post to Instagram. Don't forget to add # at the beginning of each tag.",
+      "editor": "stringList",
+      "prefill": [
+        "#babybara",
+        "#capybara",
+        "#capybaras",
+        "#capy",
+        "#capybaralove",
+        "#capybaralife"
+      ]
+    }
+  },
+  "required": ["username", "accessToken", "instagramPageID", "hashtags"]
+}

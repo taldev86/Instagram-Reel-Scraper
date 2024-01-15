@@ -1,0 +1,7 @@
+{
+    "extends": "@apify",
+    "root": true,
+
+    // indent with 2 spaces
+    "indent": ["error", 2],
+}
