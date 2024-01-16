@@ -6,7 +6,7 @@ await Actor.init();
 
 const input = await Actor.getInput();
 // log.info('Input:', input);
-log.info("====Let's publish to Instagram====");
+log.info('====STARTING====');
 
 // fixed dataset name, so we can fetch results in next run
 const dataset = await Actor.openDataset('instagram-reel-publisher');
@@ -26,7 +26,7 @@ log.info('Previous items are:', {
 });
 
 // call actor apify/instagram-reel-scraper
-log.info('Calling actor apify/instagram-reel-scraper');
+log.info('====Calling actor apify/instagram-reel-scraper====');
 const run = await Actor.call('apify/instagram-reel-scraper', {
   username: input.username,
   resultsLimit: input.resultsLimit,
@@ -40,11 +40,9 @@ if (run && run.defaultDatasetId) {
     forceCloud: true,
   });
   const data = await actorDataset.getData();
+  log.info(`Got ${data.items.length} items from apify/instagram-reel-scraper`);
+
   items = (data.items || [])
-    .sort((a, b) => {
-      // sort by timestamp (2023-12-25T15:44:18.000Z format)
-      return new Date(b.timestamp) - new Date(a.timestamp);
-    })
     .filter((item) => {
       // filter out items which are already published
       const isAlreadyPublished = previousItems.find((previousItem) => {
@@ -57,12 +55,23 @@ if (run && run.defaultDatasetId) {
         });
       }
       return !isAlreadyPublished;
+    })
+    .sort((a, b) => {
+      // sort by timestamp (2023-12-25T15:44:18.000Z format)
+      return new Date(b.timestamp) - new Date(a.timestamp);
     });
-  log.info('Fetched results from dataset:', {
-    items: items.length,
-    datasetId: run.defaultDatasetId,
-  });
+
+  log.info(`There are new ${items.length} items`);
+
+  // only pick maxPosts items to publish
+  if (input.maxPosts && input.maxPosts > 0) {
+    items = items.slice(0, input.maxPosts);
+    log.info(`Only pick ${input.maxPosts} items to publish`);
+    log.info(`Finally there are ${items.length} items need to publish`);
+  }
 }
+
+log.info('====Finished fetching results from apify/instagram-reel-scraper====');
 
 if (items.length === 0) {
   log.info('No results found');
@@ -71,7 +80,7 @@ if (items.length === 0) {
   const { accessToken, instagramPageID, hashtags } = input;
 
   for (const item of items) {
-    const { url, videoUrl, thumbnailUrl, caption, ownerUsername } = item;
+    const { url, videoUrl, thumbnailUrl, caption, ownerUsername, timestamp } = item;
     log.info('Publishing to Instagram:', {
       url,
     });
@@ -99,6 +108,7 @@ if (items.length === 0) {
           instagramUrl: res.permalink,
           description,
           url,
+          originalTimestamp: timestamp,
         });
       })
       .catch((err) => {
@@ -118,7 +128,7 @@ if (items.length === 0) {
     await sleep(input.delay || 10000);
   }
 
-  log.info('====Finished publishing to Instagram====');
+  log.info('====END====');
 }
 
 await Actor.exit();

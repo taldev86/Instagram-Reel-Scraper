@@ -33,7 +33,12 @@
       "description": "Avoid getting banned by Instagram by setting a delay between requests. The delay is in milliseconds.",
       "default": 10000
     },
-
+    "maxPosts": {
+      "title": "Maximum posts to post to Instagram",
+      "type": "integer",
+      "description": "Maximum number of posts you want to post to Instagram. If you set it to 5, you'll post 5 reels to Instagram.",
+      "default": 1
+    },
     "accessToken": {
       "title": "Facebook long-lived access token",
       "type": "string",
