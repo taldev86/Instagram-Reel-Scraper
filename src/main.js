@@ -18,7 +18,7 @@ const previousResults = await dataset.getData({
 
 // get previous items, which are already published
 const previousItems = (previousResults.items || []).filter((item) => {
-  return item.status === 'SUCCESS' || item.status === 'ERROR';
+  return item.status === 'SUCCESS';
 });
 
 log.info('Previous items are:', {
