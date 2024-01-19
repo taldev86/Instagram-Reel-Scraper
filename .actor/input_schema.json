@@ -25,7 +25,8 @@
       "title": "Dataset name",
       "type": "string",
       "description": "Name of the dataset where the reels will be saved.",
-      "default": "instagram-reel-publisher"
+      "default": "instagram-reel-publisher",
+      "editor": "textfield"
     },
     "resultsLimit": {
       "title": "Maximum reels per profile",
