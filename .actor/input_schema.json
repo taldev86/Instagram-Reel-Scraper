@@ -21,6 +21,12 @@
         "Capybaraenthusiasts"
       ]
     },
+    "datasetName": {
+      "title": "Dataset name",
+      "type": "string",
+      "description": "Name of the dataset where the reels will be saved.",
+      "default": "instagram-reel-publisher"
+    },
     "resultsLimit": {
       "title": "Maximum reels per profile",
       "type": "integer",

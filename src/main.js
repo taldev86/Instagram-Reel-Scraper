@@ -9,7 +9,9 @@ const input = await Actor.getInput();
 log.info('====STARTING====');
 
 // fixed dataset name, so we can fetch results in next run
-const dataset = await Actor.openDataset('instagram-reel-publisher');
+const dataset = await Actor.openDataset(
+  input.datasetName || 'instagram-reel-publisher'
+);
 
 // get results from previous run
 const previousResults = await dataset.getData({
@@ -80,7 +82,8 @@ if (items.length === 0) {
   const { accessToken, instagramPageID, hashtags } = input;
 
   for (const item of items) {
-    const { url, videoUrl, thumbnailUrl, caption, ownerUsername, timestamp } = item;
+    const { url, videoUrl, thumbnailUrl, caption, ownerUsername, timestamp } =
+      item;
     log.info('Publishing to Instagram:', {
       url,
     });
