@@ -86,3 +86,66 @@ export const postInstagramReel = async ({
 
   return { creationId, permalink };
 };
+
+const get60DaysToken = async ({ accessToken, appId, appSecret }) => {
+  const res = await axios.get(
+    `https://graph.facebook.com/${GRAPH_API_VERSION}/oauth/access_token`,
+    {
+      params: {
+        grant_type: 'fb_exchange_token',
+        client_id: appId,
+        client_secret: appSecret,
+        fb_exchange_token: accessToken,
+      },
+    }
+  );
+
+  const { access_token: longLivedAccessToken } = res.data;
+
+  return longLivedAccessToken;
+};
+
+const getUserId = async (longTermToken) => {
+  const res = await axios.get(
+    `https://graph.facebook.com/${GRAPH_API_VERSION}/me`,
+    {
+      params: {
+        access_token: longTermToken,
+      },
+    }
+  );
+
+  const { id: userId } = res.data;
+  return userId;
+};
+
+export const generateLongLivedAccessToken = async ({
+  accessToken,
+  appId,
+  appSecret,
+}) => {
+  // debug token https://developers.facebook.com/tools/debug/accesstoken/
+  // get 2 month token
+  const longTermToken = await get60DaysToken({
+    accessToken,
+    appId,
+    appSecret,
+  });
+
+  // get user id
+  const userId = await getUserId(longTermToken);
+
+  // Get a non-expiring token
+  const res = await axios.get(
+    `https://graph.facebook.com/${GRAPH_API_VERSION}/${userId}/accounts`,
+    {
+      params: {
+        access_token: longTermToken,
+      },
+    }
+  );
+
+  const { data } = res.data;
+  const { access_token: nonExpiringToken } = data[0];
+  return nonExpiringToken
+};

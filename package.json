@@ -1,22 +1,23 @@
 {
-	"name": "apify-instagram-reel-bot",
-	"version": "0.0.1",
-	"type": "module",
-	"description": "This is an example of an Apify actor.",
-	"dependencies": {
-		"apify": "^3.1.10",
-		"axios": "^1.6.5",
-		"crawlee": "^3.5.4",
-		"puppeteer": "*"
-	},
-	"devDependencies": {
-		"@apify/eslint-config": "^0.4.0",
-		"eslint": "^8.50.0"
-	},
-	"scripts": {
-		"start": "node src/main.js",
-		"test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
-	},
-	"author": "It's not you it's me",
-	"license": "ISC"
+  "name": "apify-instagram-reel-bot",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "This is an example of an Apify actor.",
+  "dependencies": {
+    "apify": "^3.1.10",
+    "axios": "^1.6.5",
+    "crawlee": "^3.5.4",
+    "puppeteer": "*"
+  },
+  "devDependencies": {
+    "@apify/eslint-config": "^0.4.0",
+    "eslint": "^8.50.0"
+  },
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
+    "gen_token": "node scripts/gen_token.js"
+  },
+  "author": "It's not you it's me",
+  "license": "ISC"
 }
