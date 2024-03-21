@@ -78,7 +78,7 @@
       "type": "string",
       "description": "Format of the caption. You can use the following variables: {url}, {ownerUsername}, {hashtags}, {caption}",
       "default": "{caption} \n\nCredit: @{ownerUsername} \n\n{hashtags}",
-      "editor": "textfield"
+      "editor": "textarea"
     }
   },
   "required": ["username", "accessToken", "instagramPageID", "hashtags"]
