@@ -79,7 +79,12 @@ if (items.length === 0) {
   log.info('No results found');
 } else {
   log.info('Publishing to Instagram, this might take a while...');
-  const { accessToken, instagramPageID, hashtags } = input;
+  const { accessToken, instagramPageID } = input;
+
+  const hashtags = (input.hashtags || []).join(' ');
+  const captionFormat =
+    input.captionFormat ||
+    '{caption} \n\nCredit: @{ownerUsername} \n\n{hashtags}';
 
   for (const item of items) {
     const { url, videoUrl, thumbnailUrl, caption, ownerUsername, timestamp } =
@@ -87,9 +92,16 @@ if (items.length === 0) {
     log.info('Publishing to Instagram:', {
       url,
     });
-    const description = `${caption}\n\nCredit: @${ownerUsername}\n\n${hashtags.join(
-      ' '
-    )}`;
+
+    // build description based on captionFormat
+    const description = captionFormat
+      .replace('{url}', url)
+      .replace('{caption}', caption)
+      .replace('{ownerUsername}', ownerUsername)
+      .replace('{hashtags}', hashtags);
+    log.info('Description:', {
+      description,
+    });
     await postInstagramReel({
       accessToken: accessToken,
       pageId: instagramPageID,
