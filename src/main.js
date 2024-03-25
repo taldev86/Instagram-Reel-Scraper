@@ -91,6 +91,7 @@ if (items.length === 0) {
       item;
     log.info('Publishing to Instagram:', {
       url,
+      videoUrl
     });
 
     // build description based on captionFormat
